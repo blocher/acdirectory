@@ -1,0 +1,17 @@
+site :opscode
+
+cookbook 'php'
+cookbook 'apt'
+cookbook 'build-essential'
+cookbook 'memcached'
+cookbook 'mysql'
+cookbook 'postgresql', git: 'git://github.com/phlipper/chef-postgresql'
+cookbook 'openssl'
+cookbook 'postfix'
+cookbook 'chef-php-extra', git: 'git://github.com/inviqa/chef-php-extra'
+cookbook 'redis', git: 'git://github.com/miah/chef-redis'
+cookbook 'beanstalkd', git: 'git://github.com/escapestudios/chef-beanstalkd'
+cookbook 'npm', git: 'git://github.com/balbeko/chef-npm'
+cookbook 'laravel', git: 'git://github.com/MiniCodeMonkey/chef-laravel'
+cookbook 'beanstalk_console', git: 'git://github.com/MiniCodeMonkey/chef-beanstalk_console'
+cookbook 'apache2', git: 'git://github.com/MiniCodeMonkey/apache24'

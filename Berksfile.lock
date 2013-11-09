@@ -1,0 +1,101 @@
+{
+  "sources": {
+    "php": {
+      "locked_version": "1.2.6"
+    },
+    "apt": {
+      "locked_version": "2.3.0"
+    },
+    "build-essential": {
+      "locked_version": "1.4.2"
+    },
+    "memcached": {
+      "locked_version": "1.6.2"
+    },
+    "mysql": {
+      "locked_version": "3.0.12"
+    },
+    "postgresql": {
+      "locked_version": "0.13.0",
+      "git": "git://github.com/phlipper/chef-postgresql",
+      "ref": "2ea4b18178569549332028de27c3583717926888"
+    },
+    "openssl": {
+      "locked_version": "1.1.0"
+    },
+    "postfix": {
+      "locked_version": "3.0.2"
+    },
+    "chef-php-extra": {
+      "locked_version": "0.4.0",
+      "git": "git://github.com/inviqa/chef-php-extra",
+      "ref": "7a743aa34e9082ae56ba8c64d26ee1d1b147a81a"
+    },
+    "redis": {
+      "locked_version": "2.1.1",
+      "git": "git://github.com/miah/chef-redis",
+      "ref": "5b7e8585b23dcef0de3ec6cfbb31ad75fc912d8e"
+    },
+    "beanstalkd": {
+      "locked_version": "0.1.3",
+      "git": "git://github.com/escapestudios/chef-beanstalkd",
+      "ref": "3f22991e7bb22822aa2e776c73772957d3a8b9c3"
+    },
+    "npm": {
+      "locked_version": "0.1.2",
+      "git": "git://github.com/balbeko/chef-npm",
+      "ref": "7d3bd0fd63e1e5bb08da90cf1afb0d6514cf3006"
+    },
+    "laravel": {
+      "locked_version": "1.0.0",
+      "git": "git://github.com/MiniCodeMonkey/chef-laravel",
+      "ref": "4c580b7459418d1a7e010010fbb0b89511128279"
+    },
+    "beanstalk_console": {
+      "locked_version": "0.1.0",
+      "git": "git://github.com/MiniCodeMonkey/chef-beanstalk_console",
+      "ref": "be9f0449d86b7398b525720659071f42f2e64eb2"
+    },
+    "apache2": {
+      "locked_version": "1.8.0",
+      "git": "git://github.com/MiniCodeMonkey/apache24",
+      "ref": "2ce633119d636fc5392016228e79ba5a1c0bfc40"
+    },
+    "xml": {
+      "locked_version": "1.2.0"
+    },
+    "runit": {
+      "locked_version": "1.3.0"
+    },
+    "yum": {
+      "locked_version": "2.4.0"
+    },
+    "git": {
+      "locked_version": "2.7.0"
+    },
+    "dmg": {
+      "locked_version": "2.0.4"
+    },
+    "windows": {
+      "locked_version": "1.11.0"
+    },
+    "chef_handler": {
+      "locked_version": "1.1.4"
+    },
+    "stunnel": {
+      "locked_version": "2.0.4"
+    },
+    "discovery": {
+      "locked_version": "0.2.0"
+    },
+    "python": {
+      "locked_version": "1.4.0"
+    },
+    "nodejs": {
+      "locked_version": "1.3.0"
+    },
+    "apache": {
+      "locked_version": "0.0.5"
+    }
+  }
+}
