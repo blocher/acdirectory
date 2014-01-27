@@ -26,7 +26,7 @@ return array(
 	|
 	*/
 
-	'url' => 'http://localhost',
+	'url' => 'http://acdirectory.local',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -113,7 +113,8 @@ return array(
 		'Illuminate\Validation\ValidationServiceProvider',
 		'Illuminate\View\ViewServiceProvider',
 		'Illuminate\Workbench\WorkbenchServiceProvider',
-
+		'Elvedia\Goutte\Providers\GoutteServiceProvider',
+		#'Diggin\Bridge\Guzzle\AutoCharsetEncodingPlugin\AutoCharsetEncodingPlugin',
 	),
 
 	/*
@@ -178,6 +179,8 @@ return array(
 		'URL'             => 'Illuminate\Support\Facades\URL',
 		'Validator'       => 'Illuminate\Support\Facades\Validator',
 		'View'            => 'Illuminate\Support\Facades\View',
+		'Goutte' 	  => 'Elvedia\Goutte\Facades\GoutteFacade',
+	#	'AutoCharsetEncodingPlugin'  => 'Diggin\Bridge\Guzzle\AutoCharsetEncodingPlugin\AutoCharsetEncodingPlugin'
 
 	),
 

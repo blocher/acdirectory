@@ -15,3 +15,29 @@ Route::get('/', function()
 {
 	return View::make('hello');
 });
+
+Route::get('/diocese', function() {
+	$scraper = new ScraperController();
+	var_dump($scraper->scraperDiocese());
+});
+
+Route::get('/test', function()
+{
+	$scraper = new ScraperController();
+	var_dump($scraper->scraperParish());
+	
+});
+
+Route::get('/dioceseparishes', function()
+{
+	$scraper = new ScraperController();
+	var_dump($scraper->scraperDioceseParishes());
+	
+});
+
+Route::get('/scrape', function()
+{
+	$scraper = new ScraperController();
+	var_dump($scraper->ScraperScrapeAway());
+	
+});
