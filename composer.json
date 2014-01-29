@@ -17,7 +17,8 @@
 	"require": {
 		"laravel/framework": "4.0.*",
 		"elvedia/goutte" : "1.0.*",
-		"diggin/Diggin-Bridge-Guzzle-AutoCharsetEncodingPlugin" :  "*"
+		"diggin/Diggin-Bridge-Guzzle-AutoCharsetEncodingPlugin" :  "*",
+		"stanley/geocodio-php" : "1.0.*"
 	},
 	"autoload": {
 		"classmap": [

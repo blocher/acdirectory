@@ -114,6 +114,7 @@ return array(
 		'Illuminate\View\ViewServiceProvider',
 		'Illuminate\Workbench\WorkbenchServiceProvider',
 		'Elvedia\Goutte\Providers\GoutteServiceProvider',
+		'Stanley\Geocodio\ServiceProviders\LaravelServiceProvider'
 		#'Diggin\Bridge\Guzzle\AutoCharsetEncodingPlugin\AutoCharsetEncodingPlugin',
 	),
 
@@ -180,6 +181,7 @@ return array(
 		'Validator'       => 'Illuminate\Support\Facades\Validator',
 		'View'            => 'Illuminate\Support\Facades\View',
 		'Goutte' 	  => 'Elvedia\Goutte\Facades\GoutteFacade',
+		'Geocodio' => 'Stanley\Geocodio\Geocodio',
 	#	'AutoCharsetEncodingPlugin'  => 'Diggin\Bridge\Guzzle\AutoCharsetEncodingPlugin\AutoCharsetEncodingPlugin'
 
 	),

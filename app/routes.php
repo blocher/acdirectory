@@ -41,3 +41,12 @@ Route::get('/scrape', function()
 	var_dump($scraper->ScraperScrapeAway());
 	
 });
+
+Route::get('/geocode', function()
+{
+	$key = 'a8b62bb12b5bf561ab16585eee29952282bfbf5';
+	$data = Geocodio::get('2430 K St NW; Washington, DC', $key);
+	var_dump($data->response->results);
+	
+});
+
