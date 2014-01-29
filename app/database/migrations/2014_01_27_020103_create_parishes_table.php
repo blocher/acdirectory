@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 
-class CrateParishesTable extends Migration {
+class CreateParishesTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -44,6 +44,7 @@ class CrateParishesTable extends Migration {
 			$table->string('shipping_state',256);
 			$table->string('shipping_zip',24);
 			$table->string('clergy',256);
+			$table->string('email',256);
 			$table->integer('diocese_id_num');
 		});
 

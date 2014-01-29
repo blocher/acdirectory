@@ -17,6 +17,9 @@ class ScraperController extends BaseController {
 
 	public function scraperGetParish($url,$diocese_id_num='')
 	{
+		
+
+
 		$goutte = new Goutte\Client();
 		//$url = 'https://www.theredbook.org/?event=church.view&organization_id=12589';
 		//$url = 'http://acdirectory.local/test.html';
@@ -47,8 +50,8 @@ class ScraperController extends BaseController {
 				    	}
 				 
 			    }
-			 });
-			
+			 });   
+			   
 			 if ($i!=0 && count($cleric)!=0) {
 			 	$clergy[] = $cleric;
 			 }
@@ -58,6 +61,11 @@ class ScraperController extends BaseController {
 		});
 
 		//var_dump($clergy);
+
+		//echo $url; die();
+		$querystring = parse_url($url, PHP_URL_QUERY);
+		parse_str($querystring, $vars);
+		$organization_id = $vars['organization_id'];
 		
 		$domSelector = '.editForm tr';
 		$fields = array();
@@ -88,6 +96,7 @@ class ScraperController extends BaseController {
 	    });
 
 	    $fields['clergy'] = $clergy;
+	    $fields['id'] = $organization_id;
 	    $fields['diocese_id_num'] = $diocese_id_num;
 
 	   return $fields;
@@ -157,18 +166,64 @@ class ScraperController extends BaseController {
 		return $result;
 	}
 
+	public function ScraperFilterParishes($parishes) {
+
+		//wow this is bad code -- clean it up
+		// can it all be done with the query?
+
+		$ids = array();
+		foreach ($parishes as $parish) {
+			$ids[] = $parish['id'];
+		}
+		$existing_ids = DB::table('parishes')->lists('id');
+		$different = array_diff($ids,$existing_ids);
+		$final_parishes = array();
+
+		foreach ($parishes as $parish) {
+			if (in_array($parish['id'],$different)) {
+				$final_parishes[] = $parish;
+			}
+		}
+
+		return $final_parishes;
+	}
 
 	public function ScraperScrapeAway() {
 		$i=0;
 		$dioceses = $this->scraperGetDioceses();
 		foreach ($dioceses as $diocese) {
-			echo 'diocese: '.$diocese['url'].'<br />';
+			echo "\n\n".'###################'.$diocese['id'].' '.$diocese['name'].' beginning ##############'."\n\n";
 			$parishes = $this->scraperGetParishesInDiocese($diocese['url']);
+			$parishes = $this->scraperFilterParishes($parishes);
+			
 			foreach ($parishes as $parish) {
-				echo 'parish: '.$parish['url'].'<br />';
-				var_dump ($this->scraperGetParish($parish['url'],$parish['diocese_id_num']));
 				$i++;
-				if ($i>2) exit();
+				//if ($i>5) exit();
+				$parish = $this->scraperGetParish($parish['url'],$parish['diocese_id_num']);
+				$parish_object = Parish::find($parish['id']);
+				if ($parish_object!=null) {
+					if (!isset($parish['organization_name'])) {
+						$parish['organization_name']='NA';
+					}
+					echo $parish['id'].' '.$parish['organization_name'].' already entered '."\n";
+					usleep(300000);
+					continue;
+				}
+				$parish_object = new Parish();
+				foreach ($parish as $key => $value) {
+					if ($key=='clergy') {
+						$value = json_encode($value);
+					}
+					$parish_object->$key = $value;
+					
+
+				}
+				$parish_object->save();
+				if (!isset($parish['organization_name'])) {
+						$parish['organization_name']='NA';
+				}
+				echo $parish['id'].' '.$parish['organization_name'].' saved '."\n";
+				usleep(300000);
 
 			}
 		}
