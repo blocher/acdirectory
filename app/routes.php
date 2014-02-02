@@ -50,3 +50,37 @@ Route::get('/geocode', function()
 	
 });
 
+Route::get('/geocodemany', function()
+{
+	$key = 'a8b62bb12b5bf561ab16585eee29952282bfbf5';
+	
+	$data = array(
+  		'54'=>'mkkln',
+  		'test'=>'2430 K St NW Washington DC'
+	);
+	
+	$results = Parish::get(array('id','address','address2','city','state','zip','country'));
+
+	$parishes = array();
+	foreach ($results as $result) {
+		$address = 
+			$result->address . ' ' .
+			$result->address2 . ' ' .
+			$result->city . ' ' .
+			$result->state . ' ' .
+			substr($result->zip,0,5);
+		$parishes[$result->id] = $address;
+	}
+
+	
+	$parishes = array_slice($parishes,0,10);
+	var_dump($parishes);
+	
+	$data = Geocodio::geocode($parishes, $key);
+	$data = $data->response->results;
+	foreach ($data as $datum) {
+		if (isset($datum->response->results)) {
+			var_dump($datum->response->results);
+		}
+	}
+});
