@@ -23,8 +23,8 @@ Route::get('/diocese', function() {
 
 Route::get('/test', function()
 {
-	$scraper = new ScraperController();
-	var_dump($scraper->scraperParish());
+	$scraper = new EpiscopalScraperController();
+	$scraper->getParish();
 	
 });
 

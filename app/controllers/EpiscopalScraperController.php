@@ -1,6 +1,6 @@
 <?php
 
-class ScraperController extends BaseController {
+class EpiscopalScraperController extends BaseController {
 
 	/*
 	|--------------------------------------------------------------------------
@@ -18,25 +18,127 @@ class ScraperController extends BaseController {
 	public function scraperGetParishes()
 	{
 		
-
-
+		
 		$goutte = new Goutte\Client();
-		$url = 'http://www.episcopalchurch.org/browse/parish/a?title=';
-		$crawler = $goutte->request('GET', $url);
+
+		foreach(range('a','z') as $letter) 
+		{ 
+		   echo '==========='.$letter.'====================='."\n\n"; 
+		
+
+			$base = 'http://www.episcopalchurch.org';
+			$after = '/browse/parish/'.$letter.'?title=';
+			$url = $base.$after;
 
 
-		$domSelector = '.views-table tr';
-		$results = $crawler->filter($domSelector)->each(function ($node, $i)  {
-			echo $node->first()->text();
-		});
+			//first to get maximum number of pages
+			$crawler = $goutte->request('GET', $url);
+
+			$domSelector = '.pager-last a';
+			$max = 0;
+			$max = $crawler->filter($domSelector)->each(function ($node, $i) {
+			
+				$last_url =  explode('?',$node->attr('href'));
+				parse_str($last_url[1], $output);
+				$max = $output['page'];
+				
+				return $max;
+		
+			});
+			if (is_array($max)) {
+				if (isset($max[0])) {
+					$max = $max[0];
+				} else {
+					$max = 0;
+				}
+			}
+
+			//and then to loop through the pages
+			for ($i=0; $i<=$max; $i++) {
+
+				$url = $base.$after.'&page='.$i;
+				echo "\n".$url."\n";
+				echo "\n\n".$url."\n\n"; 
+				$crawler = $goutte->request('GET', $url);
+			
+				$domSelector = '.views-table a';
+				$results = $crawler->filter($domSelector)->each(function ($node, $i)  {
+					//$node =  $node->first();
+					$parish_url = $node->attr('href'); 
+					echo $parish_url;
+					$url_count = EpiscopalURL::where('parish_url', '=', $parish_url)->count();
+					if ($url_count>=1) {
+						echo " | ALREADY ENTERED"; echo "\n";
+						
+					} else {
+						$episcopalurl = new EpiscopalURL;
+
+						$episcopalurl->parish_url = $parish_url;
+
+						$episcopalurl->save();
+						echo " | INSERTED"; echo "\n";
+					}
+				});
+
+				
+
+			}
+		} 
 
 		
 	}
 
+	public function getParish() {
+
+		$url = 'http://www.episcopalchurch.org/parish/bruton-parish-episcopal-church-williamsburg-va';
+
+		$goutte = new Goutte\Client();
+		$crawler = $goutte->request('GET', $url);
+
+
+		$domSelector = '.field-item';
+		$result = array();
+		$results = $crawler->filter($domSelector)->each(function ($node, $i)  use (&$result) {
+			$full_html = $node->text();
+			$label_node = $node->children()->filter('.field-label-inline-first')->first();
+			$label_unedited = $label_node->text();
+
+			$label = html_entity_decode($label_unedited);
+			$label = trim($label);
+			$label = str_replace(':','',$label);
+			$label = substr($label,0,strlen($label)-2);
+
+
+			$full_html = str_replace($label_unedited,'',$full_html);
+			$full_html = trim($full_html);
+	
+
+			$result[$label] = $full_html;
+		});
+
+		$result['street'] = $crawler->filter('.street-address')->first()->text();
+		$result['locality'] = $crawler->filter('.locality')->first()->text();
+		$result['postalcode'] = $crawler->filter('.postal-code')->first()->text();
+		$result['region'] = $crawler->filter('.region')->first()->text();
+		$result['country']  = $crawler->filter('.country-name')->first()->text();
+		$result['map']  = $crawler->filter('.map-link a')->first()->attr('href');
+
+		foreach ($result as $key => $value) {
+			$result[$key] = trim($value);
+		}
+		
+		$parsed_url = parse_url($result['map'], PHP_URL_QUERY);
+		parse_str($parsed_url, $query_vars);
+		$address_parts = explode(" ",$query_vars['q']);
+		$result['lat'] = $address_parts[0];
+		$result['lng'] = $address_parts[1];
+
+		var_dump($result);
+	}
+
 	public function scraperGetParishesInDiocese($url) {
 
-		$querystring = parse_url($url, PHP_URL_QUERY);
-		parse_str($querystring, $vars);
+
 		$diocese_id = $vars['ID'];
 
 

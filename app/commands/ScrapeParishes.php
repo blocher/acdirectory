@@ -37,8 +37,14 @@ class ScrapeParishes extends Command {
 	 */
 	public function fire()
 	{
+		/*
 		$scraper = new ScraperController();
 		$scraper->ScraperScrapeAway();
+		*/
+		echo 'begin'; 
+		$scraper = new EpiscopalScraperController();
+		$scraper->scraperGetParishes();
+		echo 'end';
 	}
 
 	/**
