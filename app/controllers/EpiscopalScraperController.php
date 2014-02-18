@@ -90,9 +90,10 @@ class EpiscopalScraperController extends BaseController {
 
 	public function getParish() {
 
+/*
 		$urls = EpiscopalURL::all() {
 
-		}
+		}*/
 
 		$url = 'http://www.episcopalchurch.org/parish/bruton-parish-episcopal-church-williamsburg-va';
 
@@ -142,7 +143,7 @@ class EpiscopalScraperController extends BaseController {
 		$result['lat'] = $address_parts[0];
 		$result['lng'] = $address_parts[1];
 
-		
+		$result['episcopal_id']  = str_replace('node-','',$crawler->filter('.clearfix')->first()->attr('id'));
 
 		foreach ($result as $key => $value) {
 			unset($result[$key]);

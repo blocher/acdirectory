@@ -6,6 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'AddFieldToEpiscopalParishes' => $baseDir . '/app/database/migrations/2014_02_18_004326_add_field_to_episcopal_parishes.php',
     'BaseController' => $baseDir . '/app/controllers/BaseController.php',
     'Carbon\\Carbon' => $vendorDir . '/nesbot/carbon/src/Carbon/Carbon.php',
     'ClassPreloader\\Application' => $vendorDir . '/classpreloader/classpreloader/src/ClassPreloader/Application.php',
@@ -321,6 +322,7 @@ return array(
     'Elvedia\\Goutte\\Providers\\GoutteServiceProvider' => $vendorDir . '/elvedia/goutte/src/Elvedia/Goutte/Providers/GoutteServiceProvider.php',
     'EpiscopalParish' => $baseDir . '/app/models/EpiscopalParish.php',
     'EpiscopalScraperController' => $baseDir . '/app/controllers/EpiscopalScraperController.php',
+    'EpiscopalURL' => $baseDir . '/app/models/EpiscopalURL.php',
     'Goutte\\Client' => $vendorDir . '/fabpot/goutte/Goutte/Client.php',
     'Guzzle\\Common\\AbstractHasDispatcher' => $vendorDir . '/guzzle/common/Guzzle/Common/AbstractHasDispatcher.php',
     'Guzzle\\Common\\Collection' => $vendorDir . '/guzzle/common/Guzzle/Common/Collection.php',
