@@ -90,6 +90,10 @@ class EpiscopalScraperController extends BaseController {
 
 	public function getParish() {
 
+		$urls = EpiscopalURL::all() {
+
+		}
+
 		$url = 'http://www.episcopalchurch.org/parish/bruton-parish-episcopal-church-williamsburg-va';
 
 		$goutte = new Goutte\Client();
@@ -123,15 +127,28 @@ class EpiscopalScraperController extends BaseController {
 		$result['country']  = $crawler->filter('.country-name')->first()->text();
 		$result['map']  = $crawler->filter('.map-link a')->first()->attr('href');
 
-		foreach ($result as $key => $value) {
-			$result[$key] = trim($value);
+		$result['name']  = $crawler->filter('h1')->first()->text();
+		$result['name']  = explode(',',$result['name']);
+		if (count($result['name'])>=3) {
+			array_pop($result['name']); array_pop($result['name']);
+		} else if (count($result['name'])>=2) {
+			array_pop($result['name']);
 		}
+		$result['name']  = implode(',',$result['name']);
 		
 		$parsed_url = parse_url($result['map'], PHP_URL_QUERY);
 		parse_str($parsed_url, $query_vars);
 		$address_parts = explode(" ",$query_vars['q']);
 		$result['lat'] = $address_parts[0];
 		$result['lng'] = $address_parts[1];
+
+		
+
+		foreach ($result as $key => $value) {
+			unset($result[$key]);
+			$key = str_replace(' ','_',strtolower(trim($key)));
+			$result[$key] = trim($value);
+		}
 
 		var_dump($result);
 	}
